@@ -2,7 +2,8 @@ body#LoginForm{
     background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg"); 
     background-repeat:no-repeat; 
     background-position:center; 
-    background-size:cover; 
+    background-size:cover;
+    background-attachment: fixed;
     padding:10px;
 }
 .form-heading { color:#fff; font-size:23px;}
@@ -21,13 +22,15 @@ body#LoginForm{
   border-radius: 2px;
   margin: 10px auto 20px;
   width: 28rem;
-  padding: 50px 70px 70px 70px;
+  padding: 50px 70px 50px 70px;
 }
 
 .login-form .form-group {
   margin-bottom:10px;
 }
-.login-form{ text-align:center;}
+.login-form{ 
+    text-align:center;
+}
 .loginOptions a {
   color: #777777;
   font-size: 14px;
@@ -42,6 +45,7 @@ body#LoginForm{
   height: 50px;
   line-height: 50px;
   padding: 0;
+  margin-bottom: 20px;
 }
 .forgot {
     float: left; margin-bottom:30px;
@@ -150,4 +154,9 @@ button.btn-check-login:hover {
 font-size: 100%;
 padding: 7px 0 0 13px;
 margin: 0;
+}
+
+.form-heading {
+    margin-bottom: 5rem;
+    padding-top: 1rem;
 }

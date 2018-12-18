@@ -183,14 +183,14 @@ function menu(userChoice) {
 function displayResult(name,price) {
   const cardDiv = $("<div class='card'>");
   const bodyDiv = $("<div class='card-body'>");
-  const removeBtn = $("<button class='btn btn-secondary'>remove</button>");
+  const removeBtn = $("<button class='btn btn-secondary'>Remove</button>");
   const graphBtn = $("<button class='btn btn-secondary' data-toggle='modal' data-target='#graphModal'>Show Graph</button>");
   $("#searchResult").append(cardDiv);
   cardDiv.append(bodyDiv);
   bodyDiv.append("<h5 class='card-title'>Asset: " + name + "</h5> <p class='card-text'>Current price: " + price + "</p>");
   bodyDiv.append(graphBtn, removeBtn);
   removeBtn.on("click", removeDiv);
- };
+};
 
  //remove the div once the button is clicked
 function removeDiv(){
