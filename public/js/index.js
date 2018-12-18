@@ -107,6 +107,7 @@ $("#searchBtn").click(function () {
 
 function searchStock() {
   event.preventDefault();
+  var tickerType = "stock";
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth() + 1;
@@ -130,12 +131,13 @@ function searchStock() {
     amount = Math.round(amount);
     amount = amount / 100;
     var price = "$" + amount;
-    displayResult(assetName, price);
+    displayResult(assetName, price, tickerType);
   });
 };
 
 function searchCryptocurrency() {
   event.preventDefault();
+  var tickerType = "cryptocurrency";
   var today = new Date();
   var dd = today.getDate() - 1;
   var mm = today.getMonth() + 1;
@@ -160,7 +162,7 @@ function searchCryptocurrency() {
     amount = Math.round(amount);
     amount = amount / 100;
     var price = "$" + amount;
-    displayResult(assetName, price)
+    displayResult(assetName, price, tickerType);
   });
 };
 
@@ -180,7 +182,7 @@ function menu(userChoice) {
   }
 };
 
-function displayResult(name,price) {
+function displayResult(name,price,ticker) {
   const cardDiv = $("<div class='card'>");
   const bodyDiv = $("<div class='card-body'>");
   const removeBtn = $("<button class='btn btn-secondary'>Remove</button>");
@@ -191,7 +193,8 @@ function displayResult(name,price) {
   bodyDiv.append("<h5 class='card-title'>Asset: " + name + "</h5> <p class='card-text'>Current price: " + price + "</p>");
   bodyDiv.append(graphBtn, removeBtn, saveBtn);
   removeBtn.on("click", removeDiv);
-  saveBtn.on("click", saveToPortfolio);
+  //call saveToPortfolio() when user clicks on the button, pass in userId and assetName
+  saveBtn.click({uID:1, assetN:name, type:ticker}, saveToPortfolio);
 };
 
  //remove the div once the button is clicked
@@ -199,16 +202,17 @@ function removeDiv(){
   $(this).parent().parent().remove();
 }
 
-var userId;
-var assetName;
-
-
 //takes in assetName and store this to user's portfolio on db - austin to do
-//you'll need the userId to be able to reference to this user and target its portfolio
-function saveToPortfolio (userId, asset) {
+//you now have userId and assetName populated and ready to use when this function is called
+function saveToPortfolio (event) {
+  var userId = event.data.uID;
+  var assetName = event.data.assetN;
+  var tickerType = event.data.type;
+  console.log(userId, assetName, tickerType);
 
 
-  //if success, alert user
+
+  //when added, alert user
   $("#trackSuccess").removeClass('d-none');
   $("#trackSuccess").hide();
   $("#trackSuccess").slideDown(500);
@@ -217,6 +221,3 @@ function saveToPortfolio (userId, asset) {
     $("#trackSuccess").slideUp(500);
   });
 }
-
-//call saveToPortfolio() when user clicks on the button, pass in userId and assetName - chad to do
-
