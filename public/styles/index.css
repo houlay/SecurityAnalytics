@@ -1,0 +1,50 @@
+body {
+    background-image: url("https://ak1.picdn.net/shutterstock/videos/11625341/thumb/1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#mainDiv {
+    max-width: 30rem; 
+    padding: 50px 70px 70px 70px; 
+    display: block; 
+    margin: auto;
+}
+
+.form-group #searchBtn {
+    width: 100%; 
+    height: 40px; 
+    line-height: 40px; 
+    padding: 0;
+}
+
+.card {
+    width: 40rem;
+    margin: auto;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.card-body {
+    text-align: center;
+}
+
+#mainDiv label {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    font-weight: 400;
+}
+
+.vertical-text {
+    transform: rotate(90deg) translate(10px, -40px);
+    transform-origin: bottom right;
+}
+
+.volume {
+    opacity: 0.2;
+}
+
+.btn-secondary {
+    margin: 0px 5px 5px 0px;
+}

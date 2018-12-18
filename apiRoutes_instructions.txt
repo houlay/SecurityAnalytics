@@ -1,0 +1,135 @@
+// I used Postman to test. I used id in the query string (req.query). We can call it anything you need.
+// And we can use the req.body 
+
+
+localhost:3000/api/addticker?id=3&ticker=MSBY
+returns
+{
+    "id": 16,
+    "UserId": "3",
+    "ticker": "MSBY",
+    "updatedAt": "2018-12-16T21:02:25.449Z",
+    "createdAt": "2018-12-16T21:02:25.449Z"
+}
+
+localhost:3000/api/adduser?name=Alice Test&email=Alice@test.com
+returns
+{
+    "id": 5,
+    "email": "Alice@test.com",
+    "name": "Alice Test",
+    "updatedAt": "2018-12-16T21:29:20.787Z",
+    "createdAt": "2018-12-16T21:29:20.787Z"
+}
+
+localhost:3000localhost:3000/api/getuserbyemailpassword?email=Joe@test.com&password=joe
+returns
+[
+    {
+        "id": 1,
+        "name": "Joe Test",
+        "email": "Joe@test.com",
+        "password": "joe",
+        "createdAt": "2018-12-17T17:43:31.000Z",
+        "updatedAt": "2018-12-17T17:43:31.000Z",
+        "Portfolios": [
+            {
+                "id": 1,
+                "ticker": "MMMM",
+                "price": null,
+                "description": null,
+                "createdAt": "2018-12-17T17:46:51.000Z",
+                "updatedAt": "2018-12-17T17:46:51.000Z",
+                "UserId": 1
+            },
+            {
+                "id": 2,
+                "ticker": "AAAA",
+                "price": null,
+                "description": null,
+                "createdAt": "2018-12-17T17:47:06.000Z",
+                "updatedAt": "2018-12-17T17:47:06.000Z",
+                "UserId": 1
+            },
+            {
+                "id": 3,
+                "ticker": "PPPP",
+                "price": null,
+                "description": null,
+                "createdAt": "2018-12-17T17:47:21.000Z",
+                "updatedAt": "2018-12-17T17:47:21.000Z",
+                "UserId": 1
+            },
+            {
+                "id": 4,
+                "ticker": "RRRR",
+                "price": null,
+                "description": null,
+                "createdAt": "2018-12-17T17:47:34.000Z",
+                "updatedAt": "2018-12-17T17:47:34.000Z",
+                "UserId": 1
+            }
+        ]
+    }
+]
+
+localhost:3000/api/gettickersbyuserid?id=3
+returns
+[
+    {
+        "id": 14,
+        "ticker": "JLUT",
+        "price": null,
+        "description": null,
+        "createdAt": "2018-12-16T21:01:31.000Z",
+        "updatedAt": "2018-12-16T21:01:31.000Z",
+        "UserId": 3,
+        "User": {
+            "id": 3,
+            "name": "Joe Test",
+            "email": "Joe@test.com",
+            "createdAt": "2018-12-16T20:56:58.000Z",
+            "updatedAt": "2018-12-16T20:56:58.000Z"
+        }
+    },
+    {
+        "id": 15,
+        "ticker": "MNBV",
+        "price": null,
+        "description": null,
+        "createdAt": "2018-12-16T21:02:15.000Z",
+        "updatedAt": "2018-12-16T21:02:15.000Z",
+        "UserId": 3,
+        "User": {
+            "id": 3,
+            "name": "Joe Test",
+            "email": "Joe@test.com",
+            "createdAt": "2018-12-16T20:56:58.000Z",
+            "updatedAt": "2018-12-16T20:56:58.000Z"
+        }
+    },
+    {
+        "id": 16,
+        "ticker": "MSBY",
+        "price": null,
+        "description": null,
+        "createdAt": "2018-12-16T21:02:25.000Z",
+        "updatedAt": "2018-12-16T21:02:25.000Z",
+        "UserId": 3,
+        "User": {
+            "id": 3,
+            "name": "Joe Test",
+            "email": "Joe@test.com",
+            "createdAt": "2018-12-16T20:56:58.000Z",
+            "updatedAt": "2018-12-16T20:56:58.000Z"
+        }
+    }
+]
+
+localhost:3000/api/deleteticker?id=14
+retruns
+1 // as in 1 row deleted
+
+localhost:3000/api/deleteuser?id=5
+returns
+1 // as in 1 row deleted from the users table, but it also deletes all record in the Portfolios tabel for this user
