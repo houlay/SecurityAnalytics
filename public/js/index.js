@@ -197,3 +197,13 @@ function removeDiv(){
   $(this).parent().parent().remove();
 }
 
+var userId;
+var assetName;
+
+//takes in assetName and store this to user's portfolio on db - austin to do
+//you'll need the userId to be able to reference to this user and target its portfolio
+function saveToPortfolio (userId, asset) {
+
+}
+
+//call saveToPortfolio() when user clicks on the button, pass in userId and assetName - chad to do
