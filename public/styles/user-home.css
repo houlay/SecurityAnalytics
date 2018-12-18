@@ -5,3 +5,14 @@ body {
     background-position: center;
     background-attachment: fixed;
 }
+
+.searchResult h2 {
+    color: yellow;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 20px;
+}
+
+.card-body {
+    text-align: center;
+}
