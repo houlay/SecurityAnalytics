@@ -37,8 +37,17 @@
                 </div>
                 <button type="button" class="btn btn-primary" id="loginBtn">Login</button>
             </form>
+            <a id="about" data-toggle="collapse" href="#appBio" role="button" aria-expanded="false" aria-controls="appBio">
+                    About this App
+            </a>
         </div>
     </div>
+    <!--collapsable content-->
+    <div class="collapse" id="appBio">
+        <div class="card card-body">
+            Our app Securities Analytics is a browser based toolkit that allows the user to perform in depth analysis on stocks, bonds, cryptocurrencies, and ETFs. The app achieves this by using Alpha Vantage API that provides extremely detailed historical data for the past 20 years and displays it in various informative graphs powered by d3.js. Our aim is to provide an investment tool that allows the user to easily digest complex information, realize market trends, and make a well informed investment decision.        </div>
+    </div>
+    <!--end of collapsable content-->
 </div>
 <!--end of login form-->
 
@@ -53,10 +62,10 @@
                     <span><i class="fa fa-times-circle" aria-hidden="true"></i></span>
                 </button>        
                 <form class="modal-login-form">
-                    <!-- <div class="form-group">
-                        <input type="name" class="form-control" required autocomplete="off">
-                        <label class="form-control-placeholder" for="name">User Name</label>
-                    </div> -->
+                    <div class="form-group">
+                        <input type="name" class="form-control" required autocomplete="off" id=userName>
+                        <label class="form-control-placeholder" for="name">Full Name</label>
+                    </div>
                     <div class="form-group">
                         <input type="email" class="form-control" required autocomplete="off" id=userEmail>
                         <label class="form-control-placeholder" for="name">Email address</label>
