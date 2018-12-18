@@ -185,11 +185,13 @@ function displayResult(name,price) {
   const bodyDiv = $("<div class='card-body'>");
   const removeBtn = $("<button class='btn btn-secondary'>Remove</button>");
   const graphBtn = $("<button class='btn btn-secondary' data-toggle='modal' data-target='#graphModal'>Show Graph</button>");
+  const saveBtn = $("<button class='btn btn-secondary'>Track</button>")
   $("#searchResult").append(cardDiv);
   cardDiv.append(bodyDiv);
   bodyDiv.append("<h5 class='card-title'>Asset: " + name + "</h5> <p class='card-text'>Current price: " + price + "</p>");
   bodyDiv.append(graphBtn, removeBtn);
   removeBtn.on("click", removeDiv);
+  saveBtn.on("click", saveToPortfolio);
 };
 
  //remove the div once the button is clicked
@@ -200,10 +202,23 @@ function removeDiv(){
 var userId;
 var assetName;
 
+//hide alert div after page load
+$("document").ready(function(){
+  $("#trackSuccess").hide();
+})
+
 //takes in assetName and store this to user's portfolio on db - austin to do
 //you'll need the userId to be able to reference to this user and target its portfolio
 function saveToPortfolio (userId, asset) {
 
+
+  //if success, alert user
+  $("#trackSuccess").show();
+  //hide alert after 2 seconds of showing
+  $("#trackSuccess").fadeTo(2000, 500).slideUp(500, function(){
+    $("#trackSuccess").slideUp(500);
+  });
 }
 
 //call saveToPortfolio() when user clicks on the button, pass in userId and assetName - chad to do
+
