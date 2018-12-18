@@ -76,38 +76,44 @@ d3.select('#y-axis')
     sel.append('g')
       .call(volumeAxis);
   });
+//data input for d3
+const myData = [
+  {
+    close: ["4. close"],
+    date: parseDate(today),
+    high: ["2. high"],
+    low: ["3. low"],
+    open: ["1. high"],
+    volume: ["5. volume"]
+  }
+  
+]
 
-d3.csv('data.csv',
-  // transform the data to use the default candlestick series properties
-  row => ({
-  	open: Number(row.Open),
-  	close: Number(row.Close),
-  	high: Number(row.High),
-  	low: Number(row.Low),
-  	volume:  Number(row.Volume),
-  	date: parseDate(row.Date)
-	})).then(data => {
-  
-    // handle the plot area draw event, supplying the data and rendering the seroes
-    d3.select('#plot-area')
-      .on('draw', (d, i, nodes) => {
-         const sel = d3.select(nodes[i])
-          .select('svg')
-          .selectAll('g')
-          .data([data])
-          .enter();
-         sel.append('g')
-           .classed('volume', true)
-         	 .call(volumeSeries);
-         sel.append('g')
-         	 .call(candlestickSeries);
-      });
-  
-    xScale.domain(xExtent(data));
-    priceScale.domain(yExtent(data));
-  	volumeScale.domain(volumeExtent(data));
-  
-    d3.select('#chart')
-    	.node()
-    	.requestRedraw();
-});
+function updateData(){
+    console.log(myData);
+  d3.select('#plot-area')
+    .on('draw', (d, i, nodes) => {
+        const sel = d3.select(nodes[i])
+        .select('svg')
+        .selectAll('g')
+        .data([myData])
+        .enter();
+        sel.append('g')
+          .classed('volume', true)
+          .call(volumeSeries);
+        sel.append('g')
+          .call(candlestickSeries);
+    });
+
+  xScale.domain(xExtent(myData));
+  priceScale.domain(yExtent(myData));
+  volumeScale.domain(volumeExtent(myData));
+
+  d3.select('#chart')
+    .node()
+    .requestRedraw();
+
+}
+updateData();
+
+// });
