@@ -97,6 +97,9 @@ var handleDeleteBtnClick = function () {
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
+
+
+
 //on click, set searchTerm's value to user input
 $("#searchBtn").click(function () {
   var userChoice = $("#selectTicker").val();
@@ -131,7 +134,7 @@ function searchStock() {
     amount = Math.round(amount);
     amount = amount / 100;
     var price = "$" + amount;
-    displayResult(assetName, price, tickerType);
+    displayResult(assetName, price, tickerType, "");
   });
 };
 
@@ -157,12 +160,13 @@ function searchCryptocurrency() {
     url: queryURL,
     method: "GET"
   }).then(function (value) {
+    var cryptoSymbol = cryptocurrency;
     var assetName = value["Meta Data"]["3. Digital Currency Name"];
     var amount = value["Time Series (Digital Currency Daily)"][today]["1a. open (USD)"] * 100;
     amount = Math.round(amount);
     amount = amount / 100;
     var price = "$" + amount;
-    displayResult(assetName, price, tickerType);
+    displayResult(assetName, price, tickerType, cryptoSymbol);
   });
 };
 
@@ -195,7 +199,7 @@ $(document).ready(function() {
   $("#welcome").text("Welcome, " + uName + "!");
 });
 
-function displayResult(name,price,ticker) {
+function displayResult(name,price,ticker,symbol) {
   const cardDiv = $("<div class='card'>");
   const bodyDiv = $("<div class='card-body'>");
   const removeBtn = $("<button class='btn btn-secondary'>Remove</button>");
@@ -207,7 +211,7 @@ function displayResult(name,price,ticker) {
   bodyDiv.append(graphBtn, removeBtn, saveBtn);
   removeBtn.on("click", removeDiv);
   //call saveToPortfolio() when user clicks on the button, pass in userId and assetName
-  saveBtn.click({uID:passUid, assetN:name, type:ticker}, saveToPortfolio);
+  saveBtn.click({uID:passUid, assetN:name, type:ticker, symb:symbol}, saveToPortfolio);
   
 };
 
@@ -222,27 +226,52 @@ function saveToPortfolio (event) {
   var userIdd = event.data.uID;
   var assetName = event.data.assetN;
   var tickerType = event.data.type;
-  console.log(userIdd, assetName, tickerType);
+  var isCrypto = event.data.symb;
+  console.log(userIdd, assetName, tickerType, isCrypto);
 
-  var queryURL = "/api/addticker";
-  $.ajax({
-      url: queryURL,
-      method: "POST",
-      dataType: "json",
-      data: {         
-          UserId: userIdd,
-          ticker: assetName,
-          description: tickerType
-      }
-  }).then(function (dbReturn) {
-    console.log(dbReturn);
-    //when added, alert user
-  $("#trackSuccess").removeClass('d-none');
-  $("#trackSuccess").hide();
-  $("#trackSuccess").slideDown(500);
-  //hide alert after 2 seconds of showing
-  $("#trackSuccess").fadeTo(3000, 500).slideUp(500, function(){
-    $("#trackSuccess").slideUp(500);
-  });
-  });  
+  if (isCrypto === "") {
+    var queryURL = "/api/addticker";
+    $.ajax({
+        url: queryURL,
+        method: "POST",
+        dataType: "json",
+        data: {         
+            UserID: userIdd,
+            ticker: assetName,
+            description: tickerType
+        }
+    }).then(function (dbReturn) {
+      console.log(dbReturn);
+      //when added, alert user
+    $("#trackSuccess").removeClass('d-none');
+    $("#trackSuccess").hide();
+    $("#trackSuccess").slideDown(500);
+    //hide alert after 2 seconds of showing
+    $("#trackSuccess").fadeTo(3000, 500).slideUp(500, function(){
+      $("#trackSuccess").slideUp(500);
+    });
+    });
+  } else {
+    var queryURL = "/api/addticker";
+    $.ajax({
+        url: queryURL,
+        method: "POST",
+        dataType: "json",
+        data: {         
+            UserID: userIdd,
+            ticker: isCrypto,
+            description: tickerType
+        }
+    }).then(function (dbReturn) {
+      console.log(dbReturn);
+      //when added, alert user
+    $("#trackSuccess").removeClass('d-none');
+    $("#trackSuccess").hide();
+    $("#trackSuccess").slideDown(500);
+    //hide alert after 2 seconds of showing
+    $("#trackSuccess").fadeTo(3000, 500).slideUp(500, function(){
+      $("#trackSuccess").slideUp(500);
+    });
+    });
+  }
 }

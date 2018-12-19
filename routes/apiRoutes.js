@@ -50,7 +50,7 @@ app.post("/api/adduser", function(req, res) {
 
   // Create a new Portfolio record
 app.post("/api/addticker", function(req, res) {
-    // console.log("addticker = " + req.body.UserID);
+    console.log("addticker = " + req.body.UserID);
     db.Portfolio.create(
       {
         UserId: req.body.UserID,
@@ -68,7 +68,8 @@ app.post("/api/addticker", function(req, res) {
     db.Portfolio.destroy({
        where: 
       { 
-        id: req.body.id 
+        ticker: req.body.ticker,
+        UserId: req.body.UserID
       } }).then(function(dbExample) {
       res.json(dbExample);
     });
