@@ -221,9 +221,20 @@ function saveToPortfolio (event) {
   var userId = event.data.uID;
   var assetName = event.data.assetN;
   var tickerType = event.data.type;
-  console.log(userId, assetName, tickerType);
 
+  var queryURL = "/api/addticker";
+  $.ajax({
+      url: queryURL,
+      method: "POST",
+      dataType: "json",
+      data: {
+         
+          UserId: userId,
+          assetN: ticker
+      }
+  }).then(function (dbReturn) {
 
+  });
 
   //when added, alert user
   $("#trackSuccess").removeClass('d-none');
