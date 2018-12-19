@@ -185,12 +185,14 @@ function menu(userChoice) {
 //get passed userId from redirect
 const urlParams = new URLSearchParams(window.location.search);
 const passUid = urlParams.get('passUid');
-console.log(passUid);
+const passUname = urlParams.get('passUname');
+var uName = passUname.replace("%20"," ");
 
 //replace redirect urls to pass userId for this session
 $(document).ready(function() {
-  $("#navHome").replaceWith("<a class='nav-link' href='user-home.html?passUid=" + passUid + "' id='navHome'>Home</a>");
-  $("#navSearch").replaceWith("<a class='nav-link' href='index.html?passUid=" + passUid + "' id='navSearch'>Search for Assets <span class='sr-only'>(current)</span></a>");
+  $("#navHome").replaceWith("<a class='nav-link' href='user-home.html?passUid=" + passUid + "&passUname=" + passUname + "' id='navHome'>Home</a>");
+  $("#navSearch").replaceWith("<a class='nav-link' href='index.html?passUid=" + passUid + "&passUname=" + passUname + "' id='navSearch'>Search for Assets <span class='sr-only'>(current)</span></a>");
+  $("#welcome").text("Welcome, " + uName + "!");
 });
 
 function displayResult(name,price,ticker) {
