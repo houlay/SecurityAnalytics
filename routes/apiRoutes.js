@@ -20,7 +20,7 @@ module.exports = function(app) {
 // takes the User table id or Portfolio table UesrId and 
 // returns everthing for the user. 
 app.post("/api/gettickersbyuserid", function(req, res) {
-  
+  console.log("UserID =" + req.body.UserID);
   db.Portfolio.findAll({
       where: {
       UserID: req.body.UserID
@@ -34,7 +34,7 @@ app.post("/api/gettickersbyuserid", function(req, res) {
   // Creates a new User record with email and name.
   // after this use /api/addticker with UserId to add tickers
 app.post("/api/adduser", function(req, res) {
-    console.log(req.query.email);
+    console.log(req.body.email);
     db.User.create(
       {
         email: req.body.email,
@@ -50,13 +50,12 @@ app.post("/api/adduser", function(req, res) {
 
   // Create a new Portfolio record
 app.post("/api/addticker", function(req, res) {
-    console.log(req.query.id);
+    // console.log("addticker = " + req.body.UserID);
     db.Portfolio.create(
       {
-        UserId: req.query.id,
-        ticker: req.query.ticker
-        // price: 10.94,
-        // description: "description"
+        UserId: req.body.UserID,
+        ticker: req.body.ticker,
+        description: req.body.description
       })
       .then(function(dbExample) {
     res.json(dbExample);
@@ -65,11 +64,11 @@ app.post("/api/addticker", function(req, res) {
    // Delete a single ticker by id
    // use Portfolio id not (User UsreId will delete all Portfolio records for the user)
   app.delete("/api/deleteticker", function(req, res) {
-     console.log("id=  " + req.query.id);
+     console.log("id=  " + req.body.id);
     db.Portfolio.destroy({
        where: 
       { 
-        id: req.query.id 
+        id: req.body.id 
       } }).then(function(dbExample) {
       res.json(dbExample);
     });
@@ -77,11 +76,11 @@ app.post("/api/addticker", function(req, res) {
 
    // Delete a single user by id
    app.delete("/api/deleteuser", function(req, res) {
-    console.log("id=  " + req.query.id);
+    console.log("id=  " + req.body.id);
    db.User.destroy({
       where: 
      { 
-       id: req.query.id 
+       id: req.body.id 
      } }).then(function(dbExample) {
      res.json(dbExample);
    });

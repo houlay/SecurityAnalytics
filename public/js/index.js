@@ -109,7 +109,7 @@ function searchStock() {
   event.preventDefault();
   var tickerType = "stock";
   var today = new Date();
-  var dd = today.getDate();
+  var dd = today.getDate() - 1;
   var mm = today.getMonth() + 1;
   var yyyy = today.getFullYear();
   if (dd < 10) {
@@ -208,6 +208,7 @@ function displayResult(name,price,ticker) {
   removeBtn.on("click", removeDiv);
   //call saveToPortfolio() when user clicks on the button, pass in userId and assetName
   saveBtn.click({uID:passUid, assetN:name, type:ticker}, saveToPortfolio);
+  
 };
 
 //remove the div once the button is clicked
@@ -218,25 +219,24 @@ function removeDiv(){
 //takes in assetName and store this to user's portfolio on db - austin to do
 //you now have userId and assetName populated and ready to use when this function is called
 function saveToPortfolio (event) {
-  var userId = event.data.uID;
+  var userIdd = event.data.uID;
   var assetName = event.data.assetN;
   var tickerType = event.data.type;
+  console.log(userIdd, assetName, tickerType);
 
   var queryURL = "/api/addticker";
   $.ajax({
       url: queryURL,
       method: "POST",
       dataType: "json",
-      data: {
-         
-          UserId: userId,
-          assetN: ticker
+      data: {         
+          UserId: userIdd,
+          ticker: assetName,
+          description: tickerType
       }
   }).then(function (dbReturn) {
-
-  });
-
-  //when added, alert user
+    console.log(dbReturn);
+    //when added, alert user
   $("#trackSuccess").removeClass('d-none');
   $("#trackSuccess").hide();
   $("#trackSuccess").slideDown(500);
@@ -244,4 +244,5 @@ function saveToPortfolio (event) {
   $("#trackSuccess").fadeTo(3000, 500).slideUp(500, function(){
     $("#trackSuccess").slideUp(500);
   });
+  });  
 }
