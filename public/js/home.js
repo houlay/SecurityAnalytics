@@ -2,31 +2,34 @@ var assetName;
 var currentPrice;
 var userId;
 var assetArr;
+var uName;
 
 //get passed userId from redirect
 const urlParams = new URLSearchParams(window.location.search);
 const passUid = urlParams.get('passUid');
-console.log(passUid);
+const passUname = urlParams.get('passUname');
+uName = passUname.replace("%20"," ");
 
 //replace redirect urls to pass userId for this session
 $(document).ready(function() {
-    $("#navHome").replaceWith("<a class='nav-link' href='user-home.html?passUid=" + passUid + "' id='navHome'>Home <span class='sr-only'>(current)</span></a>");
-    $("#navSearch").replaceWith("<a class='nav-link' href='index.html?passUid=" + passUid + "' id='navSearch'>Search for Assets</a>");
+    $("#navHome").replaceWith("<a class='nav-link' href='user-home.html?passUid=" + passUid + "&passUname=" + passUname + "' id='navHome'>Home <span class='sr-only'>(current)</span></a>");
+    $("#navSearch").replaceWith("<a class='nav-link' href='index.html?passUid=" + passUid + "&passUname=" + passUname + "' id='navSearch'>Search for Assets</a>");
+    $("#welcome").text("Welcome, " + uName + "!");
 });
 
 //get user info by userId
 function getUserInfo() {
-    userId = passUid;
+    userId = parseInt(passUid);
     var queryURL = "/api/gettickersbyuserid";
     $.ajax({
         url: queryURL,
         method: "POST",
         dataType: "json",
         data: {
-            userID: userId
+            userID: 1
         }
-    }).then(function (dbReturn) {
-        console.log(dbReturn);
+    }).then(function (dbExamples) {
+        console.log(dbExamples);
         //need a for loop here to populate assatArr array with API response
         // for(var i = 0; i < dbReturn[0].Portfolios.length; i++){            
         //     assetArr.push(dbReturn[0].Portfolios[i].ticker);

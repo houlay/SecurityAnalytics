@@ -47,7 +47,10 @@ function processLogin() {
     }
     else{
         //login successful, redirect user to their home page
-        window.location.href = "user-home.html?passUid=" + dbReturn[0].id;        
+        window.location.href = "user-home.html?passUid=" + dbReturn[0].id + "&passUname=" + dbReturn[0].name.replace(/ /g,"%20");
+        // console.log(dbReturn[0].name.replace(/ /g,"%20"));
+        // let test = dbReturn[0].name.replace(/ /g,"%20");
+        // console.log(test.replace("%20"," "));
     }
   });
 
