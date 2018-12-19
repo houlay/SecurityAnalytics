@@ -182,6 +182,17 @@ function menu(userChoice) {
   }
 };
 
+//get passed userId from redirect
+const urlParams = new URLSearchParams(window.location.search);
+const passUid = urlParams.get('passUid');
+console.log(passUid);
+
+//replace redirect urls to pass userId for this session
+$(document).ready(function() {
+  $("#navHome").replaceWith("<a class='nav-link' href='user-home.html?passUid=" + passUid + "' id='navHome'>Home</a>");
+  $("#navSearch").replaceWith("<a class='nav-link' href='index.html?passUid=" + passUid + "' id='navSearch'>Search for Assets <span class='sr-only'>(current)</span></a>");
+});
+
 function displayResult(name,price,ticker) {
   const cardDiv = $("<div class='card'>");
   const bodyDiv = $("<div class='card-body'>");
@@ -197,7 +208,7 @@ function displayResult(name,price,ticker) {
   saveBtn.click({uID:1, assetN:name, type:ticker}, saveToPortfolio);
 };
 
- //remove the div once the button is clicked
+//remove the div once the button is clicked
 function removeDiv(){
   $(this).parent().parent().remove();
 }

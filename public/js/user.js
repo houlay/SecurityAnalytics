@@ -11,15 +11,15 @@ $(document).ready(function(){
 function getLoginInfo() {
     userEmail = $("input[type=email]").val();
     userPass = $("input[type=password]").val();
-    console.log(userEmail, userPass);
     processLogin();
 };
 
 function getSignUpInfo() {
     userEmail = $("#userEmail").val();
+    userName = $("#userName").val();
     if ($("#pass1").val() === $("#pass2").val()) {
         userPass = $("#pass1").val();
-        console.log(userEmail, userPass);
+        console.log(userEmail, userPass, userName);
     } else {
         alert("Passwords do not match! Please check your input again.");
     };    
@@ -38,9 +38,19 @@ function processLogin() {
         email: userEmail,
         password: userPass
     }
-  }).then(function (value) {
-    console.log(value);
+  }).then(function (dbReturn) {
+    console.log(dbReturn);
+    
+    // check for good result set
+    if(typeof(dbReturn) == "undefined" || dbReturn.length < 1 ){
+        alert("Your input does not match any of our records, please check and try again!");
+    }
+    else{
+        //login successful, redirect user to their home page
+        window.location.href = "user-home.html?passUid=" + dbReturn[0].id;        
+    }
   });
+
 };
 
 //function to store new user credentials into DB
