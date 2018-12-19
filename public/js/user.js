@@ -19,7 +19,7 @@ function getSignUpInfo() {
     userName = $("#userName").val();
     if ($("#pass1").val() === $("#pass2").val()) {
         userPass = $("#pass1").val();
-        console.log(userEmail, userPass, userName);
+        registerUser();
     } else {
         alert("Passwords do not match! Please check your input again.");
     };    
@@ -48,15 +48,28 @@ function processLogin() {
     else{
         //login successful, redirect user to their home page
         window.location.href = "user-home.html?passUid=" + dbReturn[0].id + "&passUname=" + dbReturn[0].name.replace(/ /g,"%20");
-        // console.log(dbReturn[0].name.replace(/ /g,"%20"));
-        // let test = dbReturn[0].name.replace(/ /g,"%20");
-        // console.log(test.replace("%20"," "));
     }
   });
-
 };
 
 //function to store new user credentials into DB
 function registerUser() {
-
+    console.log("In registerUser");
+    console.log(userEmail, userPass);
+    var queryURL = "/api/adduser";
+    $.ajax({
+        url: queryURL,
+        method: "POST",
+        dataType: "json",
+        data: {
+            // name: userName,
+            email: userEmail,
+            password: userPass,
+            name: userName
+        }
+    }).then(function (dbReturn) {
+        //console.log(dbReturn);
+        $("#regForm").modal("hide");
+        $("#successMsg").modal("toggle");
+    });
 };
