@@ -63,7 +63,7 @@ app.post("/api/addticker", function(req, res) {
 });
    // Delete a single ticker by id
    // use Portfolio id not (User UsreId will delete all Portfolio records for the user)
-  app.delete("/api/deleteticker", function(req, res) {
+  app.post("/api/deleteticker", function(req, res) {
      console.log("id=  " + req.body.id);
     db.Portfolio.destroy({
        where: 
