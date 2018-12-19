@@ -1,14 +1,44 @@
 var assetName;
 var currentPrice;
 var userId;
+var assetArr;
 
-//determine userId by reading which user is currently logged on - chad to do
+//get passed userId from redirect
+const urlParams = new URLSearchParams(window.location.search);
+const passUid = urlParams.get('passUid');
+console.log(passUid);
 
+//replace redirect urls to pass userId for this session
+$(document).ready(function() {
+    $("#navHome").replaceWith("<a class='nav-link' href='user-home.html?passUid=" + passUid + "' id='navHome'>Home <span class='sr-only'>(current)</span></a>");
+    $("#navSearch").replaceWith("<a class='nav-link' href='index.html?passUid=" + passUid + "' id='navSearch'>Search for Assets</a>");
+});
 
+//get user info by userId
+function getUserInfo() {
+    userId = passUid;
+    var queryURL = "/api/gettickersbyuserid";
+    $.ajax({
+        url: queryURL,
+        method: "POST",
+        dataType: "json",
+        data: {
+            userID: userId
+        }
+    }).then(function (dbReturn) {
+        console.log(dbReturn);
+        //need a for loop here to populate assatArr array with API response
+        // for(var i = 0; i < dbReturn[0].Portfolios.length; i++){            
+        //     assetArr.push(dbReturn[0].Portfolios[i].ticker);
+        // };
+        // console.log(assetArr);
+    });
+
+};
 //get user portfolio from database, store ticker name and prise into assetName and currentPrice - austin to do
 //if there are multiple tickers, maybe store in an array/object?
 //talk to dean about how to read the user from DB, it's referenced by userId
-function readUserPortfolio(id) {
+function readUserPortfolio(passUid) {
 
 }
 

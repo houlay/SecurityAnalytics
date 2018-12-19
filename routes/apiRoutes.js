@@ -4,31 +4,29 @@ module.exports = function(app) {
 // takes the User table email, example "test@test.com 
 // returns everthing for the user. if this returns an empty array
 // then the user does not exist so do a post to "/api/adduser"
-  app.get("/api/getuserbyemailpassword", function(req, res) {
-  
+  app.post("/api/getuserbyemailpassword", function(req, res) {
+    console.log("req = " + req.body.email);
     db.User.findAll({
         where: {
-        email: req.query.email,
-        password: req.query.password
+        email: req.body.email,
+        password: req.body.password
       },
       include: [db.Portfolio]
-    }).then(function(dbExamples) {
-      console.log("findAll email= " + req.query.email);
-      res.json(dbExamples);
+    }).then(function(dbReturn) {
+      res.json(dbReturn);
     });
   });
 
 // takes the User table id or Portfolio table UesrId and 
 // returns everthing for the user. 
-app.get("/api/gettickersbyuserid", function(req, res) {
+app.post("/api/gettickersbyuserid", function(req, res) {
   
   db.Portfolio.findAll({
       where: {
-      UserID: req.query.id
+      UserID: req.body.UserID
     },
     include: [db.User]
   }).then(function(dbExamples) {
-    console.log("findAll id= " + req.query.id);
     res.json(dbExamples);
   });
 });
@@ -39,9 +37,10 @@ app.post("/api/adduser", function(req, res) {
     console.log(req.query.email);
     db.User.create(
       {
-        email: req.query.email,
-        name: req.query.name,
-        password: req.query.password
+        email: req.body.email,
+        password: req.body.password,
+        name: req.body.name
+        
       })
       .then(function(dbExample) {
     res.json(dbExample);
