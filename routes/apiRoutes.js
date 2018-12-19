@@ -19,15 +19,14 @@ module.exports = function(app) {
 
 // takes the User table id or Portfolio table UesrId and 
 // returns everthing for the user. 
-app.get("/api/gettickersbyuserid", function(req, res) {
+app.post("/api/gettickersbyuserid", function(req, res) {
   
   db.Portfolio.findAll({
       where: {
-      UserID: req.query.id
+      UserID: req.body.UserID
     },
     include: [db.User]
   }).then(function(dbExamples) {
-    console.log("findAll id= " + req.query.id);
     res.json(dbExamples);
   });
 });
@@ -38,9 +37,10 @@ app.post("/api/adduser", function(req, res) {
     console.log(req.query.email);
     db.User.create(
       {
-        email: req.query.email,
-        name: req.query.name,
-        password: req.query.password
+        email: req.body.email,
+        password: req.body.password,
+        name: req.body.name
+        
       })
       .then(function(dbExample) {
     res.json(dbExample);

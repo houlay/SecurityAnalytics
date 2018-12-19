@@ -20,7 +20,7 @@ function getUserInfo() {
     var queryURL = "/api/gettickersbyuserid";
     $.ajax({
         url: queryURL,
-        method: "GET",
+        method: "POST",
         dataType: "json",
         data: {
             userID: userId
