@@ -1,7 +1,18 @@
 body {
-    background-image: url("https://static1.squarespace.com/static/5ac3e2cb4eddeca5512e32ef/5ad6937203ce645b2445b42f/5ad697d7352f5320d2fe32ea/1532291085191/Axispoint-Royalty.jpg");
+    background-image: url(../img/home-bg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+}
+
+.searchResult h2 {
+    color: yellow;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 20px;
+}
+
+.card-body {
+    text-align: center;
 }

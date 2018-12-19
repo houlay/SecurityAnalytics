@@ -107,6 +107,7 @@ $("#searchBtn").click(function () {
 
 function searchStock() {
   event.preventDefault();
+  var tickerType = "stock";
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth() + 1;
@@ -130,12 +131,13 @@ function searchStock() {
     amount = Math.round(amount);
     amount = amount / 100;
     var price = "$" + amount;
-    displayResult(assetName, price);
+    displayResult(assetName, price, tickerType);
   });
 };
 
 function searchCryptocurrency() {
   event.preventDefault();
+  var tickerType = "cryptocurrency";
   var today = new Date();
   var dd = today.getDate() - 1;
   var mm = today.getMonth() + 1;
@@ -160,7 +162,7 @@ function searchCryptocurrency() {
     amount = Math.round(amount);
     amount = amount / 100;
     var price = "$" + amount;
-    displayResult(assetName, price)
+    displayResult(assetName, price, tickerType);
   });
 };
 
@@ -180,16 +182,19 @@ function menu(userChoice) {
   }
 };
 
-function displayResult(name,price) {
+function displayResult(name,price,ticker) {
   const cardDiv = $("<div class='card'>");
   const bodyDiv = $("<div class='card-body'>");
   const removeBtn = $("<button class='btn btn-secondary'>Remove</button>");
   const graphBtn = $("<button class='btn btn-secondary' data-toggle='modal' data-target='#graphModal'>Show Graph</button>");
+  const saveBtn = $("<button class='btn btn-secondary'>Track</button>")
   $("#searchResult").append(cardDiv);
   cardDiv.append(bodyDiv);
   bodyDiv.append("<h5 class='card-title'>Asset: " + name + "</h5> <p class='card-text'>Current price: " + price + "</p>");
-  bodyDiv.append(graphBtn, removeBtn);
+  bodyDiv.append(graphBtn, removeBtn, saveBtn);
   removeBtn.on("click", removeDiv);
+  //call saveToPortfolio() when user clicks on the button, pass in userId and assetName
+  saveBtn.click({uID:1, assetN:name, type:ticker}, saveToPortfolio);
 };
 
  //remove the div once the button is clicked
@@ -197,3 +202,22 @@ function removeDiv(){
   $(this).parent().parent().remove();
 }
 
+//takes in assetName and store this to user's portfolio on db - austin to do
+//you now have userId and assetName populated and ready to use when this function is called
+function saveToPortfolio (event) {
+  var userId = event.data.uID;
+  var assetName = event.data.assetN;
+  var tickerType = event.data.type;
+  console.log(userId, assetName, tickerType);
+
+
+
+  //when added, alert user
+  $("#trackSuccess").removeClass('d-none');
+  $("#trackSuccess").hide();
+  $("#trackSuccess").slideDown(500);
+  //hide alert after 2 seconds of showing
+  $("#trackSuccess").fadeTo(3000, 500).slideUp(500, function(){
+    $("#trackSuccess").slideUp(500);
+  });
+}
