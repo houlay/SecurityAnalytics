@@ -184,7 +184,7 @@ function menu(userChoice) {
 
 //get passed userId from redirect
 const urlParams = new URLSearchParams(window.location.search);
-const passUid = urlParams.get('passUid');
+const passUid = parseInt(urlParams.get('passUid'));
 const passUname = urlParams.get('passUname');
 var uName = passUname.replace("%20"," ");
 
@@ -207,7 +207,7 @@ function displayResult(name,price,ticker) {
   bodyDiv.append(graphBtn, removeBtn, saveBtn);
   removeBtn.on("click", removeDiv);
   //call saveToPortfolio() when user clicks on the button, pass in userId and assetName
-  saveBtn.click({uID:1, assetN:name, type:ticker}, saveToPortfolio);
+  saveBtn.click({uID:passUid, assetN:name, type:ticker}, saveToPortfolio);
 };
 
 //remove the div once the button is clicked

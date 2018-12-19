@@ -28,8 +28,8 @@ function getUserInfo() {
         data: {
             userID: 1
         }
-    }).then(function (dbExamples) {
-        console.log(dbExamples);
+    }).then(function (dbReturn) {
+        console.log(dbReturn);
         //need a for loop here to populate assatArr array with API response
         // for(var i = 0; i < dbReturn[0].Portfolios.length; i++){            
         //     assetArr.push(dbReturn[0].Portfolios[i].ticker);
