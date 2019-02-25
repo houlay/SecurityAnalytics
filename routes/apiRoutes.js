@@ -4,31 +4,29 @@ module.exports = function(app) {
 // takes the User table email, example "test@test.com 
 // returns everthing for the user. if this returns an empty array
 // then the user does not exist so do a post to "/api/adduser"
-  app.get("/api/getuserbyemailpassword", function(req, res) {
-  
+  app.post("/api/getuserbyemailpassword", function(req, res) {
+    console.log("req = " + req.body.email);
     db.User.findAll({
         where: {
-        email: req.query.email,
-        password: req.query.password
+        email: req.body.email,
+        password: req.body.password
       },
       include: [db.Portfolio]
-    }).then(function(dbExamples) {
-      console.log("findAll email= " + req.query.email);
-      res.json(dbExamples);
+    }).then(function(dbReturn) {
+      res.json(dbReturn);
     });
   });
 
 // takes the User table id or Portfolio table UesrId and 
 // returns everthing for the user. 
-app.get("/api/gettickersbyuserid", function(req, res) {
-  
+app.post("/api/gettickersbyuserid", function(req, res) {
+  console.log("UserID =" + req.body.UserID);
   db.Portfolio.findAll({
       where: {
-      UserID: req.query.id
+      UserID: req.body.UserID
     },
     include: [db.User]
   }).then(function(dbExamples) {
-    console.log("findAll id= " + req.query.id);
     res.json(dbExamples);
   });
 });
@@ -36,12 +34,13 @@ app.get("/api/gettickersbyuserid", function(req, res) {
   // Creates a new User record with email and name.
   // after this use /api/addticker with UserId to add tickers
 app.post("/api/adduser", function(req, res) {
-    console.log(req.query.email);
+    console.log(req.body.email);
     db.User.create(
       {
-        email: req.query.email,
-        name: req.query.name,
-        password: req.query.password
+        email: req.body.email,
+        password: req.body.password,
+        name: req.body.name
+        
       })
       .then(function(dbExample) {
     res.json(dbExample);
@@ -51,13 +50,12 @@ app.post("/api/adduser", function(req, res) {
 
   // Create a new Portfolio record
 app.post("/api/addticker", function(req, res) {
-    console.log(req.query.id);
+    console.log("addticker = " + req.body.UserID);
     db.Portfolio.create(
       {
-        UserId: req.query.id,
-        ticker: req.query.ticker
-        // price: 10.94,
-        // description: "description"
+        UserId: req.body.UserID,
+        ticker: req.body.ticker,
+        description: req.body.description
       })
       .then(function(dbExample) {
     res.json(dbExample);
@@ -65,12 +63,13 @@ app.post("/api/addticker", function(req, res) {
 });
    // Delete a single ticker by id
    // use Portfolio id not (User UsreId will delete all Portfolio records for the user)
-  app.delete("/api/deleteticker", function(req, res) {
-     console.log("id=  " + req.query.id);
+  app.post("/api/deleteticker", function(req, res) {
+     console.log("id=  " + req.body.id);
     db.Portfolio.destroy({
        where: 
       { 
-        id: req.query.id 
+        ticker: req.body.ticker,
+        UserId: req.body.UserID
       } }).then(function(dbExample) {
       res.json(dbExample);
     });
@@ -78,11 +77,11 @@ app.post("/api/addticker", function(req, res) {
 
    // Delete a single user by id
    app.delete("/api/deleteuser", function(req, res) {
-    console.log("id=  " + req.query.id);
+    console.log("id=  " + req.body.id);
    db.User.destroy({
       where: 
      { 
-       id: req.query.id 
+       id: req.body.id 
      } }).then(function(dbExample) {
      res.json(dbExample);
    });
